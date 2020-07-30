@@ -1,0 +1,97 @@
+----------------------------------------------------------------------------------------------------------------------------------------
+Problem
+----------------------------------------------------------------------------------------------------------------------------------------
+In an attempt to reduce the growing population, Doctor Strange was asked to come up with a plan. 
+Doctor Strange being as intelligent (and strange!) as he is, came up with the following plan: 
+If N children, with names C1, C2, ..., CN, are born to parents with names A and B, and 
+you consider C to be the concatenation of all the names of the children, i.e. C = C1 + C2 + ... + CN 
+(where + is concatenation operator), then C should be a substring of one of the permutations of A + B. 
+You are given the task to verify whether the names parents propose to give their children are in fact permissible by Doctor Strange's plan or not.
+
+Input Format
+The first line contains an integer T, the number of test cases. T test cases follow. 
+Each testcase starts with a line containing two space separated strings A and B, denoting the names of the parents. 
+The next line contains a single integer N denoting the number of children A and B are planning to have. 
+Following this are N lines, the ith line containing Ci , the proposed name for the ith child.
+
+Constraints
+1 ≤ T ≤ 100
+1 ≤ N ≤ 1000
+The lengths of all the strings including A, B, and all Ci will be in the range [1, 40000], both inclusive. 
+All these strings will contain only lowercase English letters. 
+The combined lengths of all names of children will not exceed the combined length of the names of their parents.
+
+Output Format
+For each test case output a single line containing "YES" if the names are permissible by Doctor Strange's plan, otherwise print "NO". 
+(quotes are meant for clarity, please don't print them)
+
+Sample Input 0
+3 
+tommarvolo riddle 
+2 
+lord 
+voldemort 
+cheap up 
+1 
+heapcup 
+bruce wayne 
+2 
+bat 
+man 
+
+Sample Output 0
+YES 
+YES 
+NO
+----------------------------------------------------------------------------------------------------------------------------------------
+Code: C++
+----------------------------------------------------------------------------------------------------------------------------------------
+#include <iostream>
+using namespace std;
+
+int main() {
+    // your code goes here
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string a,b;
+        cin>>a>>b;
+        int n;
+        cin>>n;
+        
+        int hash[150]={0};
+        for(int i=0;i<a.size();++i)
+        {
+            hash[a[i]]++;
+        }
+        for(int i=0;i<b.size();++i)
+        {
+            hash[b[i]]++;
+        }
+        int count=0,l=n,i;
+        while(n--)
+        {
+            string p;
+            cin>>p;
+            for( i=0;i<p.size();++i)
+            {
+               if(hash[p[i]])
+               hash[p[i]]--;
+               else
+               {
+                 break;
+               }
+            }
+            if(i==p.size())
+            count++;
+            else
+            count=0;
+        }
+        if(l==count)
+        cout<<"YES"<<endl;
+        else
+        cout<<"NO"<<endl;
+    }
+    return 0;
+}
